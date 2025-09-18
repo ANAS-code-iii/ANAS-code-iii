@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home of Nargis</title>
+    <style>
+        /* Reset some default browser styles */
+        body, h1, h2, h3, h4, p, ul, li, img {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #ffffff;
+            color: #333;
+        }
+        /* Header and navigation */
+        header {
+            background-color: #232f3e;
+            color: #fff;
+            padding: 10px 20px;
+        }
+        /* Header container styling */
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px;
+        }
+        nav a:hover {
+            background-color: #37475a;
+            border-radius: 4px;
+        }
+        /* Main hero section */
+        .hero {
+            width: 100%;
+            height: 300px;
+            background-color: #f3f3f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .hero img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .product-card h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .price {
+            color: #b12704;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-card button {
+            background-color: #f0c14b;
+            border: 1px solid #a88734;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .product-card button:hover {
+            background-color: #e7b50d;
+        }
+        /* Footer */
+        footer {
+            background-color: #232f3e;
+            color: #fff;
+            text-align: center;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with logo and navigation -->
+    <header>
+        <div class="header-content">
+            <div class="logo" lang="bn">নার্গিসের ঘর</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Cart (<span id="cart-count">0</span>)</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Hero banner -->
+        <section class="hero">
+            <img src="https://via.placeholder.com/1200x300?text=Banner+Image" alt="Banner">
+        </section>
+
+        <!-- Product Grid -->
+        <section class="product-grid">
+            <!-- Example Product 1 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+1" alt="Product 1">
+                <h3>Product 1</h3>
+                <p class="price">$19.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <!-- Example Product 2 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+2" alt="Product 2">
+                <h3>Product 2</h3>
+                <p class="price">$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <!-- Example Product 3 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+3" alt="Product 3">
+                <h3>Product 3</h3>
+                <p class="price">$39.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <!-- Example Product 4 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+4" alt="Product 4">
+                <h3>Product 4</h3>
+                <p class="price">$49.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <!-- Example Product 5 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+5" alt="Product 5">
+                <h3>Product 5</h3>
+                <p class="price">$59.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+            <!-- Example Product 6 -->
+            <article class="product-card">
+                <img src="https://via.placeholder.com/200x150?text=Product+6" alt="Product 6">
+                <h3>Product 6</h3>
+                <p class="price">$69.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </article>
+        </section>
+    </main>
+
+    <!-- Footer with basic links -->
+    <footer>
+        <a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">About Us</a>
+    </footer>
+
+    <!-- Simple JavaScript for cart count functionality -->
+    <script>
+        // Get all "Add to Cart" buttons and cart count element
+        const cartButtons = document.querySelectorAll('.add-to-cart');
+        const cartCountElement = document.getElementById('cart-count');
+        let cartCount = 0;
+
+        // Add event listener to each button
+        cartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                cartCount++;
+                cartCountElement.textContent = cartCount;
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
