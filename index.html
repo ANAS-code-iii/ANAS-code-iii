@@ -1,273 +1,122 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ANAS — Tic Tac Toe</title>
+  <meta charset="UTF-8">
+  <title>NOTE WITH ANAS</title>
   <style>
-    :root{
-      --bg1:#0f172a; --bg2:#0ea5e9; --card:#0b1220;
-      --accent:#ff6b6b; --muted:#94a3b8; --glass: rgba(255,255,255,0.06);
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 20px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    body{
-      display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(180deg,var(--bg1),#071427 60%);
-      color:#e6eef6;padding:24px;
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
     }
-
-    .container{
-      width:100%;max-width:720px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:14px; padding:20px; box-shadow: 0 8px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03);
+    textarea {
+      width: 60%;
+      height: 100px;
+      padding: 8px;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
     }
-
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
-    .title{display:flex;align-items:center;gap:12px}
-    .logo{
-      width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--bg2),#6366f1);
-      display:flex;align-items:center;justify-content:center;font-weight:700;color:#021024;font-size:20px;box-shadow:0 6px 18px rgba(10,20,40,0.5)
+    button#addBtn {
+      padding: 8px 16px;
+      margin-left: 8px;
     }
-    h1{font-size:20px;margin:0}
-    p.lead{margin:0;color:var(--muted);font-size:13px}
-
-    .board-wrap{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
-    .game{
-      background:var(--card);padding:18px;border-radius:12px;flex:1;min-width:260px;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.02)
+    input#search {
+      margin: 1rem 0;
+      width: 60%;
+      padding: 8px;
+      border: 1px solid #ccc;
     }
-
-    .grid{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-      width:320px;max-width:100%;
+    #notesContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
     }
-    .cell{
-      aspect-ratio:1/1;background:var(--glass);border-radius:8px;display:flex;
-      align-items:center;justify-content:center;font-size:46px;font-weight:800;color:#fff;
-      transition:transform .12s ease, background .12s;cursor:pointer;user-select:none;
-      box-shadow:inset 0 -2px 6px rgba(0,0,0,0.4);
+    .noteCard {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px;
+      margin: 8px;
+      width: 200px;
+      box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+      text-align: left;
     }
-    .cell:hover{transform:translateY(-4px)}
-    .cell.x{color:#60a5fa} /* blue for X */
-    .cell.o{color:#fca5a5} /* pink for O */
-
-    .panel{min-width:180px;padding:12px;border-radius:10px;background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.05));}
-    .stat{font-size:13px;color:var(--muted);margin-bottom:8px}
-    .big{font-weight:700;font-size:18px;color:#fff;margin-bottom:8px}
-    .controls{display:flex;gap:8px;flex-wrap:wrap}
-    button{
-      background:linear-gradient(180deg,#0ea5e9,#0369a1);border:none;color:white;padding:8px 12px;
-      border-radius:8px;font-weight:600;cursor:pointer;box-shadow:0 6px 14px rgba(3,105,161,0.24);
+    .noteCard h3 {
+      font-size: 1.1rem;
+      margin: 0 0 0.5rem 0;
     }
-    button.secondary{
-      background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);box-shadow:none;padding:8px 10px;
-    }
-    .footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
-
-    /* winner highlight line */
-    .win-line{
-      position:absolute;pointer-events:none;transition:opacity .25s;
-    }
-
-    @media (max-width:600px){
-      .board-wrap{flex-direction:column;align-items:center}
-      .panel{width:100%}
-      .grid{width:260px}
+    .noteCard button {
+      margin-top: 0.5rem;
+      color: #c00;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container" role="application" aria-label="ANAS Tic Tac Toe">
-    <header>
-      <div class="title">
-        <div class="logo">AN</div>
-        <div>
-          <h1>ANAS — Tic Tac Toe</h1>
-          <p class="lead">Simple browser game. Play vs another person on same device.</p>
-        </div>
-      </div>
-      <div class="meta">
-        <div style="text-align:right">
-          <div class="stat">Mode: <strong id="modeText">Two Players</strong></div>
-          <div class="stat">Turn: <strong id="turnText">X</strong></div>
-        </div>
-      </div>
-    </header>
-
-    <div class="board-wrap">
-      <div class="game" aria-live="polite">
-        <div id="grid" class="grid" role="grid" aria-label="tic tac toe board"></div>
-        <div class="footer" id="message">Click any cell to start — X goes first.</div>
-      </div>
-
-      <div class="panel" aria-hidden="false">
-        <div class="big">Status</div>
-        <div class="stat">Current: <strong id="statusCurrent">X</strong></div>
-        <div class="stat">Winner: <strong id="statusWinner">—</strong></div>
-        <div class="stat">Draws: <strong id="drawCount">0</strong></div>
-
-        <div style="height:12px"></div>
-        <div class="big">Controls</div>
-        <div class="controls" style="margin-bottom:10px">
-          <button id="btnRestart">Restart</button>
-          <button id="btnReset" class="secondary">Reset Scores</button>
-          <button id="btnSwitch" class="secondary">Switch X/O</button>
-        </div>
-
-        <div style="height:12px"></div>
-        <div class="big">Scores</div>
-        <div class="stat">X: <strong id="scoreX">0</strong></div>
-        <div class="stat">O: <strong id="scoreO">0</strong></div>
-      </div>
-    </div>
-  </div>
+  <h1>NOTE WITH-ANAS</h1>
+  <textarea id="noteContent" placeholder="Write your note here..."></textarea>
+  <button id="addBtn">Add Note</button>
+  <input type="text" id="search" placeholder="Search notes...">
+  <div id="notesContainer"></div>
 
   <script>
-    // ANAS Tic Tac Toe — single-file JS
-    (function(){
-      const WIN_LINES = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
+    // Load and display existing notes on startup
+    document.addEventListener('DOMContentLoaded', showNotes);
 
-      const gridEl = document.getElementById('grid');
-      const turnText = document.getElementById('turnText');
-      const statusCurrent = document.getElementById('statusCurrent');
-      const statusWinner = document.getElementById('statusWinner');
-      const message = document.getElementById('message');
-      const btnRestart = document.getElementById('btnRestart');
-      const btnReset = document.getElementById('btnReset');
-      const btnSwitch = document.getElementById('btnSwitch');
-      const drawCountEl = document.getElementById('drawCount');
-      const scoreXEl = document.getElementById('scoreX');
-      const scoreOEl = document.getElementById('scoreO');
-      const modeText = document.getElementById('modeText');
-
-      let board = Array(9).fill(null);
-      let xIsNext = true;
-      let winner = null;
-      let draws = 0;
-      let scores = { X:0, O:0 };
-
-      // build cells
-      for(let i=0;i<9;i++){
-        const b = document.createElement('button');
-        b.className = 'cell';
-        b.setAttribute('data-i', i);
-        b.setAttribute('role','gridcell');
-        b.setAttribute('aria-label','empty cell');
-        b.addEventListener('click', onCellClick);
-        gridEl.appendChild(b);
+    // Add note
+    document.getElementById('addBtn').addEventListener('click', function() {
+      let text = document.getElementById('noteContent').value.trim();
+      if (text) {
+        let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+        notes.push(text);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        document.getElementById('noteContent').value = '';
+        showNotes();
       }
+    });
 
-      function render(){
-        const cells = gridEl.children;
-        for(let i=0;i<9;i++){
-          const val = board[i];
-          const el = cells[i];
-          el.textContent = val || '';
-          el.classList.toggle('x', val === 'X');
-          el.classList.toggle('o', val === 'O');
-          el.disabled = !!val || !!winner;
-          el.setAttribute('aria-label', val ? (val + ' at cell ' + (i+1)) : 'empty cell ' + (i+1));
-        }
-        turnText.textContent = xIsNext ? 'X' : 'O';
-        statusCurrent.textContent = xIsNext ? 'X' : 'O';
-        statusWinner.textContent = winner ? winner : '—';
-        drawCountEl.textContent = draws;
-        scoreXEl.textContent = scores.X;
-        scoreOEl.textContent = scores.O;
-
-        if(winner){
-          message.textContent = (winner === 'Draw') ? 'Game is a draw.' : `Winner: ${winner}`;
-          highlightWinning(winner !== 'Draw' ? winningLine(board) : null);
-        } else {
-          message.textContent = `Next: ${xIsNext ? 'X' : 'O'}. Click a cell to play.`;
-          highlightWinning(null);
-        }
-      }
-
-      function onCellClick(e){
-        const idx = Number(e.currentTarget.dataset.i);
-        if(board[idx] || winner) return;
-        board[idx] = xIsNext ? 'X' : 'O';
-        xIsNext = !xIsNext;
-        winner = computeWinner(board);
-        if(winner){
-          if(winner === 'Draw'){
-            draws++;
-          } else {
-            scores[winner]++;
-          }
-        }
-        render();
-      }
-
-      function computeWinner(b){
-        for(const line of WIN_LINES){
-          const [a,b1,c] = line;
-          if(b[a] && b[a] === b[b1] && b[a] === b[c]) return b[a];
-        }
-        // draw?
-        if(b.every(Boolean)) return 'Draw';
-        return null;
-      }
-
-      function winningLine(boardState){
-        for(const line of WIN_LINES){
-          const [a,b1,c] = line;
-          if(boardState[a] && boardState[a] === boardState[b1] && boardState[a] === boardState[c]){
-            return line;
-          }
-        }
-        return null;
-      }
-
-      function highlightWinning(line){
-        // remove previous highlights
-        Array.from(gridEl.children).forEach(cell => cell.style.outline = 'none');
-        if(!line) return;
-        for(const i of line){
-          gridEl.children[i].style.outline = '3px solid rgba(255,215,100,0.14)';
-          gridEl.children[i].style.boxShadow = '0 6px 18px rgba(255,215,100,0.08) inset';
-        }
-      }
-
-      btnRestart.addEventListener('click', ()=> {
-        board = Array(9).fill(null);
-        winner = null;
-        xIsNext = true;
-        render();
+    // Display notes
+    function showNotes() {
+      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      const container = document.getElementById('notesContainer');
+      container.innerHTML = '';
+      notes.forEach((noteText, index) => {
+        let card = document.createElement('div');
+        card.className = 'noteCard';
+        card.innerHTML = `
+          <h3>Note ${index + 1}</h3>
+          <p>${noteText}</p>
+          <button onclick="deleteNote(${index})">Delete</button>
+        `;
+        container.appendChild(card);
       });
+    }
 
-      btnReset.addEventListener('click', ()=> {
-        scores = { X:0, O:0 };
-        draws = 0;
-        document.getElementById('statusWinner').textContent = '—';
-        render();
+    // Delete note
+    function deleteNote(index) {
+      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+      notes.splice(index, 1);
+      localStorage.setItem('notes', JSON.stringify(notes));
+      showNotes();
+    }
+
+    // Search/filter notes
+    document.getElementById('search').addEventListener('input', function() {
+      let query = this.value.toLowerCase();
+      document.querySelectorAll('.noteCard').forEach(card => {
+        let text = card.querySelector('p').innerText.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
       });
-
-      btnSwitch.addEventListener('click', ()=> {
-        // switch which symbol starts first
-        xIsNext = !xIsNext;
-        document.getElementById('modeText').textContent = xIsNext ? 'X starts' : 'O starts';
-        render();
-      });
-
-      // keyboard support: 1-9 to place (numpad/row)
-      window.addEventListener('keydown', (ev) => {
-        if(ev.key >= '1' && ev.key <= '9'){
-          const idx = Number(ev.key) - 1;
-          const cell = gridEl.children[idx];
-          if(cell) cell.click();
-        }
-        if(ev.key === 'r' || ev.key === 'R') btnRestart.click();
-      });
-
-      // initial render
-      render();
-    })();
+    });
   </script>
 </body>
 </html>
