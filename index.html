@@ -2,121 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NOTE WITH ANAS</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      color: #333;
-      margin-bottom: 1rem;
-    }
-    textarea {
-      width: 60%;
-      height: 100px;
-      padding: 8px;
-      margin: 0.5rem 0;
-      border: 1px solid #ccc;
-    }
-    button#addBtn {
-      padding: 8px 16px;
-      margin-left: 8px;
-    }
-    input#search {
-      margin: 1rem 0;
-      width: 60%;
-      padding: 8px;
-      border: 1px solid #ccc;
-    }
-    #notesContainer {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-    .noteCard {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 10px;
-      margin: 8px;
-      width: 200px;
-      box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-      text-align: left;
-    }
-    .noteCard h3 {
-      font-size: 1.1rem;
-      margin: 0 0 0.5rem 0;
-    }
-    .noteCard button {
-      margin-top: 0.5rem;
-      color: #c00;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
 </head>
 <body>
-  <h1>NOTE WITH-ANAS</h1>
-  <textarea id="noteContent" placeholder="Write your note here..."></textarea>
-  <button id="addBtn">Add Note</button>
-  <input type="text" id="search" placeholder="Search notes...">
-  <div id="notesContainer"></div>
-
-  <script>
-    // Load and display existing notes on startup
-    document.addEventListener('DOMContentLoaded', showNotes);
-
-    // Add note
-    document.getElementById('addBtn').addEventListener('click', function() {
-      let text = document.getElementById('noteContent').value.trim();
-      if (text) {
-        let notes = JSON.parse(localStorage.getItem('notes') || '[]');
-        notes.push(text);
-        localStorage.setItem('notes', JSON.stringify(notes));
-        document.getElementById('noteContent').value = '';
-        showNotes();
-      }
-    });
-
-    // Display notes
-    function showNotes() {
-      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
-      const container = document.getElementById('notesContainer');
-      container.innerHTML = '';
-      notes.forEach((noteText, index) => {
-        let card = document.createElement('div');
-        card.className = 'noteCard';
-        card.innerHTML = `
-          <h3>Note ${index + 1}</h3>
-          <p>${noteText}</p>
-          <button onclick="deleteNote(${index})">Delete</button>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // Delete note
-    function deleteNote(index) {
-      let notes = JSON.parse(localStorage.getItem('notes') || '[]');
-      notes.splice(index, 1);
-      localStorage.setItem('notes', JSON.stringify(notes));
-      showNotes();
-    }
-
-    // Search/filter notes
-    document.getElementById('search').addEventListener('input', function() {
-      let query = this.value.toLowerCase();
-      document.querySelectorAll('.noteCard').forEach(card => {
-        let text = card.querySelector('p').innerText.toLowerCase();
-        card.style.display = text.includes(query) ? 'block' : 'none';
-      });
-    });
-  </script>
+  <h1 >TIC-TAC-TOE</h1>
+  <div class="winner hide"><p id="msg"></p></div>
+  <div class="new-game">
+    <div class="button-1">NEW-GAME</div>
+  </div>
+  <div class="container">
+  <div class="game">
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+    <button class ='button'></button>
+</div>
+  </div>
+  <div class="reset"><div class="button-end">RESET</div></div>
+  <script src="main.js"></script>
 </body>
 </html>
